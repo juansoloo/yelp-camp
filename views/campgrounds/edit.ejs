@@ -6,7 +6,7 @@
     <title>Edit Campgorund</title>
 </head>
 <body>
-    <form action="/campgrounds" method="POST">
+    <form action="/campgrounds/<%=campground._id%>?_method=PUT" method="POST">
         <div>
             <label for="title">Title</label>
             <input type="text" id="title" name="campground[title]" value="<%=campground.title%>">
@@ -16,7 +16,7 @@
             <input type="text" id="location" name="campground[location]" value="<%=campground.location%>">
         </div>
         <button>Add Campground</button>
-            <a href="/campgrounds/<%campground._id%>"></a>Update Campground</a>
     </form>
+    <a href="/campgrounds/<%=campground._id%>">Update Campground</a>
 </body>
 </html>
