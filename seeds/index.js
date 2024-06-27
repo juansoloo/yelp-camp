@@ -18,7 +18,7 @@ const sample = (array) => array[Math.floor(Math.random() * array.length)];
     try {
       const resp = await axios.get('https://api.unsplash.com/photos/random', {
         params: {
-          client_id: 'fN3HfX4588uVJW9FFUswdYKGPpW5v9gmdBFooFKa6jk',
+          client_id: 'rr0w11FMu_Otz67IEu2n2KWTrpcRj_WDbHwHGfxV0ow',
           collections: 'p2bLSJgDPjk',
           count: 30 
         },
@@ -32,7 +32,7 @@ const sample = (array) => array[Math.floor(Math.random() * array.length)];
 
   const seedDB = async () => {
     await Campground.deleteMany({})
-    for (let i = 0; i < 20; i++) {
+    for (let i = 0; i < 50; i++) {
       // setup
       const placeSeed = Math.floor(Math.random() * places.length)
       const descriptorsSeed = Math.floor(Math.random() * descriptors.length)
