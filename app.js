@@ -3,7 +3,7 @@ const path = require('path');
 const mongoose = require('mongoose');
 const ejsMate = require('ejs-mate');
 const methodOverride = require('method-override');
-const Campground = require('./models/campground');
+const Campground = require('./model/campground');
 
 mongoose.connect('mongodb://localhost:27017/yelpcamp');
 
