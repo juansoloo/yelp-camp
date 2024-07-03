@@ -66,7 +66,14 @@ app.delete('/campgrounds/:id', catchAsync(async(req,res) => {
     res.redirect('/campgrounds')
 }))
 
+app.all('*', (req,res,next) => {
+    next(new expressError('Page not Found', 404))
+    res.send("404")
+})
+
 app.use((err,req,res,next) => {
+    const { statusCode = 500, message = 'Something went wrong' } = err;
+    res.status(statusCode).send(message);
     res.send('Something went wrong')
 })
 
