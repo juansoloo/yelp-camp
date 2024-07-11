@@ -8,6 +8,7 @@ const { campgroundSchema } = require('./schema.js')
 const Joi = require('joi');
 const catchAsync = require('./utils/catchAsync');
 const expressError = require('./utils/expressError');
+const Review = require('./model/review');
 
 mongoose.connect('mongodb://localhost:27017/yelpcamp');
 
@@ -78,6 +79,15 @@ app.delete('/campgrounds/:id', catchAsync(async(req,res) => {
     const { id } = req.params;
     await Campground.findByIdAndDelete(id)
     res.redirect('/campgrounds')
+}))
+
+app.post('/campgrounds/:_id/reviews', catchAsync(async(req,res) => {
+    const campground = await Campground.findById(req.params._id);
+    const review = new Review(req.body.review);
+    campground.reviews.push();
+    await review.save();
+    await campground.save();
+    res.redirect(`/campgrounds/${campground._id}`);
 }))
 
 app.all('*', (req,res,next) => {
