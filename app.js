@@ -27,8 +27,7 @@ app.use(express.urlencoded({extended: true }));
 app.use(methodOverride('_method'))
 
 const validateCampground = (req,res,next) => {
- 
-    const { error } = CampgroundSchema.validate(req.body); 
+    const { error } = campgroundSchema.validate(req.body); 
     if (error) {
         const msg = error.details.map(el => el.message).join(',');
         throw new expressError(msg, 400);
