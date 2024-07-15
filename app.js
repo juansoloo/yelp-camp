@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
+const flash = require('connect-flash');
 const ejsMate = require('ejs-mate');
 const methodOverride = require('method-override');
 const session = require('express-session');
@@ -10,6 +11,7 @@ const reviews = require('./routes/reviews');
 
 const expressError = require('./utils/expressError');
 mongoose.connect('mongodb://localhost:27017/yelpcamp');
+
 const db = mongoose.connection; 
 db.on("error", console.error.bind(console, "connection, error"));
 db.once("open", () => {
@@ -30,9 +32,16 @@ const secretConfig = {
     secret: 'thisshouldbeabettersecret',
     resave: false,
     saveUninitialized: true,
-}
+    cookie: {
+        httpOnly: true,
+        exprires: Date.now() + 1000 * 60 * 60 * 24 * 7,
+        maxAge: 1000 * 60 * 60 * 24 * 7,
+    }
+};
 
-app.use(session(secretConfig))
+app.use(session(secretConfig));
+app.use(flash());
+
 
 app.use('/campgrounds', campgrounds);
 app.use('/campgrounds/:_id/reviews', reviews)
@@ -47,7 +56,8 @@ app.all('*', (req,res,next) => {
 })
 
 app.use((err,req,res,next) => {
-    const { statusCode = 500, message = 'Something went wrong' } = err;
+    const { statusCode = 500 } = err;
+    if(!err.message) err.message = 'Something went wrong' 
     res.status(statusCode).render('errors', { err });
 })
 
