@@ -7,11 +7,11 @@ const methodOverride = require('method-override');
 const session = require('express-session');
 const passport = require('passport');
 const localStrategy = require('passport-local');
-const User = require('./model/user')
+const User = require('./model/user');
 
-
-const campgrounds = require('./routes/campgrounds');
-const reviews = require('./routes/reviews');
+const userRoutes = require('./routes/user')
+const campgroundRoutes = require('./routes/campgrounds');
+const reviewRoutes = require('./routes/reviews');
 
 const expressError = require('./utils/expressError');
 mongoose.connect('mongodb://localhost:27017/yelpcamp');
@@ -67,8 +67,9 @@ app.get('/fakeUser', async (req,res) => {
     res.send(newUser)
 })
 
-app.use('/campgrounds', campgrounds);
-app.use('/campgrounds/:_id/reviews', reviews)
+app.use('/', userRoutes);
+app.use('/campgrounds', campgroundRoutes); 
+app.use('/campgrounds/:_id/reviews', reviewRoutes);
 
 app.get('/',(req,res) => {
     res.render('home')
