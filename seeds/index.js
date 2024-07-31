@@ -42,6 +42,7 @@ const sample = (array) => array[Math.floor(Math.random() * array.length)];
    
       // seed data into campground
       const camp = new Campground({
+        author: '6698718b43043f6fa8fc8e0a',
         image: sample(imgs),
         title: `${descriptors[descriptorsSeed]} ${places[placeSeed]}`,
         location: `${cities[citySeed].city}, ${cities[citySeed].state}`,
