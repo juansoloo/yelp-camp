@@ -32,8 +32,6 @@ app.use(express.urlencoded({extended: true }));
 app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname)));
 
-
-
 const secretConfig = {
     secret: 'thisshouldbeabettersecret',
     resave: false,
@@ -69,7 +67,6 @@ app.use('/campgrounds/:_id/reviews', reviewRoutes);
 app.get('/',(req,res) => {
     res.render('home')
 })
-
 
 app.all('*', (req,res,next) => {
     next(new expressError('Page Not Found', 404))
