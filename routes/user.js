@@ -6,13 +6,13 @@ const User = require('../model/user');
 const user = require('../controllers/users')
 const { storeReturnTo } = require('../middleware');
 
-router.get('/register', user.renderRegister)
+router.route('/register')
+    .get(user.renderRegister)
+    .post(catchAsync(user.registerUser))
 
-router.post('/register', catchAsync(user.registerUser))
-
-router.get('/login', user.renderLogin)
-
-router.post('/login', storeReturnTo, passport.authenticate('local', { failureFlash: true, failureRedirect: '/login' }), user.login)
+router.route('/login')
+    .get(user.renderLogin)
+    .post(storeReturnTo, passport.authenticate('local', { failureFlash: true, failureRedirect: '/login' }), user.login)
 
 router.get('/logout', user.logout);
 
