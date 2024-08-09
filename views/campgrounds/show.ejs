@@ -5,7 +5,7 @@
 
 <div class="row">
     <div class="col-6">
-        <div id="map" style="width: 400px; height: 300px;"></div>
+        
         <div id="campgroundCarousel" class="carousel slide">
             <div class="carousel-inner">
                 <% campground.images.forEach((img, i) => { %>
@@ -50,6 +50,7 @@
             
     </div>
     <div class="col-6">
+        <div id="map" style="width: 100%; height: 300px;"></div>
             <% if(currentUser) { %>
             <h2>Leave Review</h2>
             <form action="/campgrounds/<%=campground._id%>/reviews" method="POST" class="mb-3 validated-form" novalidate>
@@ -84,6 +85,7 @@
             </form>
             <% } %>
         <% for (let review of campground.reviews) { %>
+            
         <div class="card mb-3">                        
             <div class="card-body">
                 <h5 class="card-title"><%=review.author.username%></h5>
@@ -101,6 +103,7 @@
         </div>
         <% } %>
     </div>
+    
 </div>
 
 <script>
@@ -108,4 +111,4 @@
     const campground = <%- JSON.stringify(campground) %>
 </script>
 
-<script src="/javascripts/showPageMap.js"></script>
+<script src="/public/javascripts/showPageMap.js"></script>
