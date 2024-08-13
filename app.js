@@ -2,6 +2,8 @@ if(process.env.NODE_ENV !== 'production') {
     require('dotenv').config();
 }
 
+
+
 const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
@@ -16,6 +18,8 @@ const User = require('./model/user');
 const userRoutes = require('./routes/user')
 const campgroundRoutes = require('./routes/campgrounds');
 const reviewRoutes = require('./routes/reviews');
+
+const mongoSanitize = require('express-mongo-sanitize');
 
 const expressError = require('./utils/expressError');
 mongoose.connect('mongodb://localhost:27017/yelpcamp');
@@ -35,6 +39,11 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(express.urlencoded({extended: true }));
 app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname)));
+app.use(
+    mongoSanitize({
+        replaceWith: '_',
+    })
+);
 
 const secretConfig = {
     secret: 'thisshouldbeabettersecret',
@@ -50,6 +59,7 @@ const secretConfig = {
 app.use(session(secretConfig));
 app.use(flash());
 
+
 app.use(passport.initialize());
 app.use(passport.session());
 passport.use(new localStrategy(User.authenticate()));
@@ -58,6 +68,7 @@ passport.serializeUser(User.serializeUser())
 passport.deserializeUser(User.deserializeUser())
 
 app.use((req,res,next) => {
+    console.log(req.query);
     res.locals.currentUser = req.user;
     res.locals.success = req.flash('success');
     res.locals.error = req.flash('error');
