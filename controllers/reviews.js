@@ -16,7 +16,6 @@ module.exports.deleteReview = async (req,res) => {
     const { _id, reviewId } = req.params;
     await Campground.findByIdAndUpdate(_id, { $pull: {reviews: reviewId} });
     await Review.findByIdAndDelete(reviewId);
-    console.log(_id , 'test')
     req.flash('success', 'Successfully deleted review')
     res.redirect(`/campgrounds/${_id}`);
 }
