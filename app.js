@@ -24,8 +24,8 @@ const mongoSanitize = require('express-mongo-sanitize');
 
 const expressError = require('./utils/expressError');
 
-const dbUrl = process.env.DB_URL;
-const localDb = 'mongodb://localhost:27017/yelpcamp';
+const dbUrl = process.env.DB_URL; //use when running in prod
+const localDb = 'mongodb://localhost:27017/yelpcamp'; //use when in testing
 
 mongoose.connect(localDb);
 
