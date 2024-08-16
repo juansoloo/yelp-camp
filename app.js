@@ -1,7 +1,7 @@
 if(process.env.NODE_ENV !== 'production') {
     require('dotenv').config({ path: './.env' });
 }
-// require('dotenv').config();
+
 
 const express = require('express');
 const path = require('path');
@@ -15,6 +15,7 @@ const localStrategy = require('passport-local');
 const User = require('./model/user');
 const helmet = require('helmet');
 
+
 const userRoutes = require('./routes/user')
 const campgroundRoutes = require('./routes/campgrounds');
 const reviewRoutes = require('./routes/reviews');
@@ -22,7 +23,11 @@ const reviewRoutes = require('./routes/reviews');
 const mongoSanitize = require('express-mongo-sanitize');
 
 const expressError = require('./utils/expressError');
-mongoose.connect('mongodb://localhost:27017/yelpcamp');
+
+const dbUrl = process.env.DB_URL;
+const localDb = 'mongodb://localhost:27017/yelpcamp';
+
+mongoose.connect(localDb);
 
 const db = mongoose.connection; 
 db.on("error", console.error.bind(console, "connection, error"));
@@ -92,7 +97,8 @@ app.use(
                 "blob:",
                 "data:",
                 "https://res.cloudinary.com/dhknjxmpc/",
-                "https://api.maptiler.com/"
+                "https://api.maptiler.com/",
+                "https://images.unsplash.com/"
             ],
             fontSrc: ["'self'", ...fontSrcUrls]
         }

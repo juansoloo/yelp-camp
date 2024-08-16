@@ -8,7 +8,7 @@ maptilerClient.config.apiKey = process.env.MAPTILER_API_KEY;
 
 module.exports.index = async (req,res) => {
     const campgrounds = await Campground.find();
-    console.log(process.env.MAPTILER_API_KEY)
+    // console.log(process.env.MAPTILER_API_KEY)
     res.render('campgrounds/index', { campgrounds });
 }
 
@@ -23,7 +23,7 @@ module.exports.createCampground = async (req,res,next) => {
     campground.images = req.files.map(f => ({ url: f.path, filename: f.filename }));
     campground.author = req.user._id;
     await campground.save();
-    console.log(campground);
+    // console.log(campground);
     req.flash('success', 'Successfully made a new campground');
     res.redirect(`/campgrounds/${campground._id}`);
 }
@@ -35,7 +35,7 @@ module.exports.showCampground = async (req,res) => {
             path: 'author'
         }
     }).populate('author');
-    console.log(campground);
+    // console.log(campground);
     if (!campground) {
         req.flash('error', 'Campground does not exist');
         return res.redirect('/campgrounds');
@@ -66,7 +66,7 @@ module.exports.updateCampground = async (req,res) => {
             await cloudinary.uploader.destroy(filename);
         }
         await campground.updateOne({ $pull: { images: { filename: { $in: req.body.deleteImages } } } });
-        console.log(campground)
+        // console.log(campground)
     }
     req.flash('success', 'Successfully updated campground');
     res.redirect(`/campgrounds/${campground._id}`)
