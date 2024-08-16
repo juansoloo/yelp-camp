@@ -2,7 +2,6 @@ if(process.env.NODE_ENV !== 'production') {
     require('dotenv').config({ path: './.env' });
 }
 
-
 const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
@@ -15,6 +14,7 @@ const localStrategy = require('passport-local');
 const User = require('./model/user');
 const helmet = require('helmet');
 
+const MongoDbStore = require('connect-mongo');
 
 const userRoutes = require('./routes/user')
 const campgroundRoutes = require('./routes/campgrounds');
@@ -33,7 +33,7 @@ const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection, error"));
 db.once("open", () => {
     console.log("Database connected");
-})
+});
 
 const app = express();
 
@@ -50,7 +50,20 @@ app.use(
     })
 );
 
+const store = MongoDbStore.create({
+    mongoUrl: localDb,
+    touchAfter: 24 * 60 * 60,
+    crypto: {
+        secret: 'thisshouldbeabettersecret'
+    }
+});
+
+store.on('error', function(err) {
+    console.log("SESSION STORE ERROR", err)
+})
+
 const secretConfig = {
+    store,
     secret: 'thisshouldbeabettersecret',
     resave: false,
     saveUninitialized: true,
@@ -60,6 +73,9 @@ const secretConfig = {
         maxAge: 1000 * 60 * 60 * 24 * 7,
     }
 };
+
+app.use(session(secretConfig));
+app.use(flash());
 
 const scriptSrcUrls = [
     "https://stackpath.bootstrapcdn.com/",
@@ -81,8 +97,6 @@ const connectSrcUrls = [
 ];
 const fontSrcUrls = [];
 
-app.use(session(secretConfig));
-app.use(flash());
 app.use(
     helmet.contentSecurityPolicy({
         directives: {
