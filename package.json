@@ -1,7 +1,7 @@
 {
   "name": "yelpcamp",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -32,6 +32,9 @@
     "passport-local": "^1.0.0",
     "passport-local-mongoose": "^8.0.0",
     "sanitize-html": "^2.13.0"
+  },
+  "engines": {
+    "node": "22.6.0"
   },
   "devDependencies": {
     "dotenv": "^16.4.5"
