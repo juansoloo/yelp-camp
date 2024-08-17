@@ -27,7 +27,7 @@ const expressError = require('./utils/expressError');
 const dbUrl = process.env.DB_URL; //use when running in prod
 const localDb = 'mongodb://localhost:27017/yelpcamp'; //use when in testing
 
-mongoose.connect(dbUrl);
+mongoose.connect(localDb);
 
 const db = mongoose.connection; 
 db.on("error", console.error.bind(console, "connection, error"));
