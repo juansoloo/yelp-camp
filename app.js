@@ -25,9 +25,9 @@ const mongoSanitize = require('express-mongo-sanitize');
 const expressError = require('./utils/expressError');
 
 const dbUrl = process.env.DB_URL; //use when running in prod
-const localDb = 'mongodb://localhost:27017/yelpcamp'; //use when in testing
+const localDb = 'mongodb://localhost:27017/yelpcamp'; 
 
-mongoose.connect(localDb);
+mongoose.connect(dbUrl);
 
 const db = mongoose.connection; 
 db.on("error", console.error.bind(console, "connection, error"));
@@ -51,7 +51,7 @@ app.use(
 );
 
 const store = MongoDbStore.create({
-    mongoUrl: localDb,
+    mongoUrl: dbUrl,
     touchAfter: 24 * 60 * 60,
     crypto: {
         secret: 'thisshouldbeabettersecret'
