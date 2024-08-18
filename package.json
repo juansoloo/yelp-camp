@@ -35,7 +35,7 @@
     "sanitize-html": "^2.13.0"
   },
   "engines": {
-    "node": "^22.6.0"
+    "node": "^20.x"
   },
   "devDependencies": {
     "dotenv": "^16.4.5"
