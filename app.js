@@ -13,7 +13,6 @@ const passport = require('passport');
 const localStrategy = require('passport-local');
 const User = require('./model/user');
 const helmet = require('helmet');
-const missFile = require('./node_modules/mongoose/lib/modifiedPathsSnapshot')
 
 const MongoDbStore = require('connect-mongo');
 
@@ -153,6 +152,5 @@ app.use((err,req,res,next) => {
 })
 
 app.listen(3000, () => {
-    console.log(missFile)
     console.log('serving on port 3000')
 });
