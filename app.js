@@ -19,7 +19,6 @@ const MongoDbStore = require('connect-mongo');
 const userRoutes = require('./routes/user')
 const campgroundRoutes = require('./routes/campgrounds');
 const reviewRoutes = require('./routes/reviews');
-
 const mongoSanitize = require('express-mongo-sanitize');
 
 const expressError = require('./utils/expressError');
